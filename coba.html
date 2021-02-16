@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text">
+  <h1>ajax with XMLHttpRequest</h1>
+  <ol id="target"></ol>
+  <button id="trigger" onclick="ajaxExample()">jalanin ajax</button>
+  <script> 
+    function ajaxExample(){
+      fetch('https://swapi.dev/api/people')
+      .then(function(response){
+        return response.json()
+      })
+      .then(function(data){
+        var characters = data.results
+        for(var i=0; i<characters.length; i++){
+          var element = document.createElement('li')
+          element.innerHTML = characters[i].name
+          document.getElementById('target').appendChild(element)
+        }
+      })
+      .catch(function(err){
+        console.log(err)
+      })
+    }
+
+    // document.getElementById('trigger').addEventListener('click',ajaxExample)
+  </script>
+</body>
+</html>

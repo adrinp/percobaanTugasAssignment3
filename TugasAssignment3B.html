@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>DATA COVID 19 INDONESIA</h1>
+    <ol id="target"></ol>
+    <H4>Positif : </H4>
+    <H4>Sembuh : </H4>
+    <H4>Meninggal : </H4>
+    <script>
+    function ajaxExample(){
+      fetch('https://indonesia-covid-19.mathdro.id/api/provinsi')
+      .then(function(response){
+        return response.json()
+      })
+      .then(function(data){
+        var characters = data.results
+        for(var i=0; i<characters.length; i++){
+          var element = document.createElement
+          element.innerHTML = characters[i].provinsi
+          document.getElementById('target').appendChild(element)
+        }
+      })
+      .catch(function(err){
+        console.log(err)
+      })
+    }
+    </script>
+</body>
+</html>
