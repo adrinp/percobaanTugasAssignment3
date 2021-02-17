@@ -5,13 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+      th, td, table{
+        border: solid 1px;
+      }
+    </style>
 </head>
 <body>
     <h1>DATA COVID 19 INDONESIA</h1>
+    <H4>Positif : <span id="total-positif"></span> </H4>
+    <H4>Sembuh : <span id="total-sembuh"></span> </H4>
+    <H4>Meninggal : <span id="total-meninggal"></span> </H4>
+    <table id="target">
+      <tr>
+      <th>Provinsi</th>
+      <th>Positif</th>
+      <th>Sembuh</th>
+      <th>Meninggal</th>
+    </tr>
+    </table>
     <ol id="target"></ol>
-    <H4>Positif : </H4>
-    <H4>Sembuh : </H4>
-    <H4>Meninggal : </H4>
     <script>
     function ajaxExample(){
       fetch('https://indonesia-covid-19.mathdro.id/api/provinsi')
@@ -19,17 +32,34 @@
         return response.json()
       })
       .then(function(data){
-        var characters = data.results
+        console.log(data)
+        var characters = data.data
+        var totPositif = 0
+        var totSembuh = 0
+        var totMeninggal = 0
         for(var i=0; i<characters.length; i++){
-          var element = document.createElement
-          element.innerHTML = characters[i].provinsi
+          var element = document.createElement("tr")   
+          console.log(element)
+          element.innerHTML = `
+          <td>${characters[i].provinsi}</td>
+          <td>${characters[i].kasusPosi}</td>
+          <td>${characters[i].kasusSemb}</td>
+          <td>${characters[i].kasusMeni}</td>
+          `
           document.getElementById('target').appendChild(element)
+          totPositif = totPositif + characters[i].kasusPosi
+          totSembuh = totSembuh + characters[i].kasusSemb
+          totMeninggal = totMeninggal + characters[i].kasusMeni
         }
+        document.getElementById('total-positif').innerHTML = totPositif
+        document.getElementById('total-sembuh').innerHTML = totSembuh
+        document.getElementById('total-meninggal').innerHTML = totMeninggal
       })
       .catch(function(err){
         console.log(err)
       })
     }
+    ajaxExample()
     </script>
 </body>
 </html>
